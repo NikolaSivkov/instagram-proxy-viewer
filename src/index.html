@@ -78,8 +78,7 @@
         return match ? match[1] : null;
       }
 
-      function showReel() {
-        const url = document.getElementById("reel-url").value;
+      function showReel(url) {
         const reelId = getReelId(url);
         if (reelId) {
           const embedUrl = `https://www.instagram.com/p/${reelId}/embed`;
@@ -99,6 +98,9 @@
             showReel();
           }
         });
+
+      const browserUrl = window.location.href;
+      showReel(browserUrl);
     </script>
   </body>
 </html>
