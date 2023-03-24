@@ -73,7 +73,7 @@
     <script>
       function getReelId(url) {
         const regex =
-          /(?:www\.instagram\.com|instagram\.com)\/reel\/([^/?]+)\/?/;
+          /(?:https:\/\/www\.instagram\.com|https:\/\/instagram\.com)?\/reel\/([^/?]+)\/?/;
         const match = url.match(regex);
         return match ? match[1] : null;
       }
