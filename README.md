@@ -90,6 +90,27 @@ I need one additional button next to the "view reel" button that copies the curr
 ```
 now integrate this into the existing code and give me the final output.
 ```
+
+I found a small bug, so I told chatGPT about it, and fix it. 
 ```
 The following page has a bug. the regex in the `getReelId` function should also match `reel` or `reels`
 ```
+Here's the response. 
+
+![image](https://user-images.githubusercontent.com/116631257/227726939-6f57ab48-e905-4b86-9676-d134609bf13c.png)
+
+And the diff
+
+```diff
+function getReelId(url) {
+-  const regex = /(?:https:\/\/www\.instagram\.com|https:\/\/instagram\.com)?\/reel\/([^/?]+)\/?/;
++  const regex = /(?:https:\/\/www\.instagram\.com|https:\/\/instagram\.com)?\/reel(s)?\/([^/?]+)\/?/;
+  const match = url.match(regex);
+-  return match ? match[1] : null;
++  return match ? match[2] : null;
+}
+```
+
+Notice how the damn thing adjusted the position of the match group? WTF! This is mindblowing!
+
+
