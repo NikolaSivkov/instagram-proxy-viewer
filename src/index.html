@@ -85,21 +85,23 @@
         return match ? match[1] : null;
       }
 
-      function showReel() {
+      function showReel(url) {
         const urlInput = document.getElementById("reel-url");
-        const url = urlInput.value;
+        if (!url) {
+          url = urlInput.value;
+        }
         const reelId = getReelId(url);
         if (reelId) {
           const embedUrl = `https://www.instagram.com/p/${reelId}/embed`;
           document.getElementById("reel-container").innerHTML = `
-                    <div class="iframe-container">
-                        <iframe src="${embedUrl}" scrolling="no" allowtransparency="true"></iframe>
-                    </div>
-                `;
+      <div class="iframe-container">
+          <iframe src="${embedUrl}" scrolling="no" allowtransparency="true"></iframe>
+      </div>
+    `;
           // replace path part of url in browser with path part from input box
           const urlObject = new URL(window.location.href);
           urlObject.pathname = `/reel/${reelId}/`;
-          window.history.replaceState({}, '', urlObject);
+          window.history.replaceState({}, "", urlObject);
         }
       }
 
