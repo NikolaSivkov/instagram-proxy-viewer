@@ -80,10 +80,10 @@
 
     <script>
       function getReelId(url) {
-        const regex =
-          /(?:https:\/\/www\.instagram\.com|https:\/\/instagram\.com)?\/reel\/([^/?]+)\/?/;
+        function getReelId(url) {
+        const regex = /(?:https:\/\/www\.instagram\.com|https:\/\/instagram\.com)?\/reel(s)?\/([^/?]+)\/?/;
         const match = url.match(regex);
-        return match ? match[1] : null;
+        return match ? match[2] : null;
       }
 
       function showReel(url) {
