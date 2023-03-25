@@ -90,4 +90,6 @@ I need one additional button next to the "view reel" button that copies the curr
 ```
 now integrate this into the existing code and give me the final output.
 ```
-
+```
+The following page has a bug. the regex in the `getReelId` function should also match `reel` or `reels`
+```
