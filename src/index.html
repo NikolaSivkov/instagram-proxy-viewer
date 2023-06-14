@@ -1,135 +1,138 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
+
+<head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Instagram Reel Viewer</title>
     <!-- Cloudflare Web Analytics -->
-    <script
-      defer
-      src="https://static.cloudflareinsights.com/beacon.min.js"
-      data-cf-beacon='{"token": "1b5f58d222bc4b65bd8423e89fadd709"}'
-    ></script>
+    <script defer src="https://static.cloudflareinsights.com/beacon.min.js"
+        data-cf-beacon='{"token": "1b5f58d222bc4b65bd8423e89fadd709"}'></script>
     <!-- End Cloudflare Web Analytics -->
     <style>
-      body {
-        font-family: Arial, sans-serif;
-        text-align: center;
-        background-color: #fafafa;
-      }
-      h1 {
-        color: #262626;
-        margin-bottom: 30px;
-      }
-      input[type="text"] {
-        width: 80%;
-        padding: 12px 20px;
-        margin: 8px 0;
-        box-sizing: border-box;
-        border: 2px solid #ccc;
-        border-radius: 4px;
-      }
-      button {
-        background-color: #3897f0;
-        border: none;
-        color: white;
-        padding: 15px 32px;
-        text-align: center;
-        text-decoration: none;
-        display: inline-block;
-        font-size: 16px;
-        margin: 4px 2px;
-        cursor: pointer;
-        border-radius: 4px;
-      }
-      #reel-container {
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        margin-top: 30px;
-        max-width: 480px;
-        margin-left: auto;
-        margin-right: auto;
-      }
-      .iframe-container {
-        position: relative;
-        width: 100%;
-        height: 0;
-        padding-top: 120%; /* Aspect ratio */
-      }
-      iframe {
-        position: absolute;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        border: none;
-      }
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            background-color: #fafafa;
+        }
+
+        h1 {
+            color: #262626;
+            margin-bottom: 30px;
+        }
+
+        input[type="text"] {
+            width: 80%;
+            padding: 12px 20px;
+            margin: 8px 0;
+            box-sizing: border-box;
+            border: 2px solid #ccc;
+            border-radius: 4px;
+        }
+
+        button {
+            background-color: #3897f0;
+            border: none;
+            color: white;
+            padding: 15px 32px;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            font-size: 16px;
+            margin: 4px 2px;
+            cursor: pointer;
+            border-radius: 4px;
+        }
+
+        #reel-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-top: 30px;
+            max-width: 480px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .iframe-container {
+            position: relative;
+            width: 100%;
+            height: 0;
+            padding-top: 120%;
+            /* Aspect ratio */
+        }
+
+        iframe {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            border: none;
+        }
     </style>
-  </head>
-  <body>
+</head>
+
+<body>
     <h1>Instagram Reel Viewer</h1>
-    <input
-      type="text"
-      id="reel-url"
-      placeholder="Enter Instagram Reel URL..."
-    />
+    <input type="text" id="reel-url" placeholder="Enter Instagram Reel URL..." />
     <button onclick="showReel()">View Reel</button>
     <button onclick="copyUrlToClipboard()">Copy URL</button>
     <div id="reel-container"></div>
 
     <script>
-      function getReelId(url) {
-        const regex = /(?:https:\/\/www\.instagram\.com|https:\/\/instagram\.com)?\/reel(s)?\/([^/?]+)\/?/;
-        const match = url.match(regex);
-        return match ? match[2] : null;
-      }
-
-      function showReel(url) {
-        const urlInput = document.getElementById("reel-url");
-        if (!url) {
-          url = urlInput.value;
+        function getReelId(url) {
+            const regex = /(?:https:\/\/(www\.)?instagram\.com)?\/((reel(s)?)|p)\/([^\/?]+)\/?/;
+            const match = url.match(regex);
+            return match ? match[2] : null;
         }
-        const reelId = getReelId(url);
-        if (reelId) {
-          const embedUrl = `https://www.instagram.com/p/${reelId}/embed`;
-          document.getElementById("reel-container").innerHTML = `
+
+        function showReel(url) {
+            const urlInput = document.getElementById("reel-url");
+            if (!url) {
+                url = urlInput.value;
+            }
+            const reelId = getReelId(url);
+            if (reelId) {
+                const embedUrl = `https://www.instagram.com/p/${reelId}/embed`;
+                document.getElementById("reel-container").innerHTML = `
             <div class="iframe-container">
                 <iframe src="${embedUrl}" scrolling="no" allowtransparency="true"></iframe>
             </div>
           `;
-          // replace path part of url in browser with path part from input box
-          const urlObject = new URL(window.location.href);
-          urlObject.pathname = `/reel/${reelId}/`;
-          window.history.replaceState({}, "", urlObject);
+                // replace path part of url in browser with path part from input box
+                const urlObject = new URL(window.location.href);
+                urlObject.pathname = `/reel/${reelId}/`;
+                window.history.replaceState({}, "", urlObject);
+            }
         }
-      }
 
-      function copyUrlToClipboard() {
-        // Create a temporary textarea element to hold the URL
-        const tempTextarea = document.createElement("textarea");
-        tempTextarea.value = window.location.href;
-        document.body.appendChild(tempTextarea);
+        function copyUrlToClipboard() {
+            // Create a temporary textarea element to hold the URL
+            const tempTextarea = document.createElement("textarea");
+            tempTextarea.value = window.location.href;
+            document.body.appendChild(tempTextarea);
 
-        // Select and copy the URL
-        tempTextarea.select();
-        document.execCommand("copy");
+            // Select and copy the URL
+            tempTextarea.select();
+            document.execCommand("copy");
 
-        // Remove the temporary textarea element
-        document.body.removeChild(tempTextarea);
-      }
+            // Remove the temporary textarea element
+            document.body.removeChild(tempTextarea);
+        }
 
-      document
-        .getElementById("reel-url")
-        .addEventListener("keydown", function (event) {
-          if (event.key === "Enter") {
-            event.preventDefault();
-            showReel();
-          }
-        });
+        document
+            .getElementById("reel-url")
+            .addEventListener("keydown", function (event) {
+                if (event.key === "Enter") {
+                    event.preventDefault();
+                    showReel();
+                }
+            });
 
-      const browserUrl = window.location.href;
-      showReel(browserUrl);
+        const browserUrl = window.location.href;
+        showReel(browserUrl);
     </script>
-  </body>
+</body>
+
 </html>
